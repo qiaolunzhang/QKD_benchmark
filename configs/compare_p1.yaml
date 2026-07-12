@@ -1,0 +1,18 @@
+# P1 comparison: all four heuristics + MILP on German-7 across loads/seeds.
+# Full sweep:  qkdbench run -c configs/compare_p1.yaml
+# (For a quick smoke test, cut n_requests to [10] and seeds to [1].)
+name: compare_p1
+output: results/compare_p1.csv
+algorithms: [greedy_sp, key_aware_sp, fse_greedy, local_search, milp_p1]
+instances:
+  topology: german7
+  n_requests: [10, 20, 30]
+  seeds: [1, 2, 3, 4, 5]
+  num_slots: 5
+  wavelengths: 2
+  modules_per_node: 2
+  mean_volume_kb: 100
+  rate_table: fse_1540_alone
+algo_params:
+  local_search: {seed: 0, budget_iters: 50, restarts: 4}
+  milp_p1: {time_limit_s: 120, k_paths: 5}

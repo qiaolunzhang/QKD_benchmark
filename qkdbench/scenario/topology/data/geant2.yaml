@@ -1,0 +1,96 @@
+id: geant2
+version: "1.0"
+source: |
+  GEANT2 pan-European research network, reduced to 30 nodes / 48 links.
+  Source: Internet Topology Zoo (topology-zoo.org), Geant2009.graphml
+  (GEANT2-era snapshot, 34 nodes / 52 links, full WGS84 coordinates;
+  S. Knight et al., 'The Internet Topology Zoo', IEEE JSAC 2011).
+  Reduction rule (mechanical, no hand edits): multi-edges collapsed,
+  then degree-1 leaf nodes removed iteratively (drops 4 stub PoPs);
+  the result is connected. Node ids are the country-code labels.
+  Link lengths: great-circle distance of node coordinates,
+  method: haversine (the source has no authoritative fibre lengths).
+  National-scale lengths: for QKD reach use
+  make_instance(length_scale=...).
+directed: false
+checksum: c938abbcbc90
+nodes:
+  - {id: "AT", coords: [14.28611, 48.30639]}
+  - {id: "BE", coords: [4.34878, 50.85045]}
+  - {id: "BG", coords: [23.32415, 42.69751]}
+  - {id: "CH", coords: [7.44744, 46.94809]}
+  - {id: "CY", coords: [33.36667, 35.16667]}
+  - {id: "CZ", coords: [14.42076, 50.08804]}
+  - {id: "DE", coords: [13.41053, 52.52437]}
+  - {id: "DK", coords: [12.56553, 55.67594]}
+  - {id: "EE", coords: [24.75353, 59.43696]}
+  - {id: "ES", coords: [-3.70256, 40.4165]}
+  - {id: "FR", coords: [2.3488, 48.85341]}
+  - {id: "GR", coords: [21.73444, 38.24444]}
+  - {id: "HR", coords: [16.53917, 45.23167]}
+  - {id: "HU", coords: [19.03991, 47.49801]}
+  - {id: "IT", coords: [12.4839, 41.89474]}
+  - {id: "LT", coords: [26.8, 53.76667]}
+  - {id: "LU", coords: [6.13, 49.61167]}
+  - {id: "LV", coords: [24.10589, 56.946]}
+  - {id: "MT", coords: [14.42556, 35.90917]}
+  - {id: "NL", coords: [4.88969, 52.37403]}
+  - {id: "NO", coords: [25.46816, 65.01236]}
+  - {id: "PL", coords: [16.96667, 52.41667]}
+  - {id: "PT", coords: [-9.13333, 38.71667]}
+  - {id: "RO", coords: [26.10626, 44.43225]}
+  - {id: "RU", coords: [37.61556, 55.75222]}
+  - {id: "SE", coords: [18.0649, 59.33258]}
+  - {id: "SK", coords: [17.10674, 48.14816]}
+  - {id: "SL", coords: [14.50513, 46.05108]}
+  - {id: "TR", coords: [34.91155, 39.05901]}
+  - {id: "UK", coords: [-0.12574, 51.50853]}
+links:
+  - {a: "AT", b: "DE", length_km: 473.09}
+  - {a: "AT", b: "GR", length_km: 1269.54}
+  - {a: "AT", b: "IT", length_km: 726.78}
+  - {a: "AT", b: "SK", length_km: 209.67}
+  - {a: "AT", b: "SL", length_km: 251.32}
+  - {a: "BE", b: "NL", length_km: 173.48}
+  - {a: "BE", b: "UK", length_km: 320.31}
+  - {a: "BG", b: "GR", length_km: 513.07}
+  - {a: "BG", b: "HU", length_km: 630.65}
+  - {a: "BG", b: "RO", length_km: 295.7}
+  - {a: "BG", b: "TR", length_km: 1053.73}
+  - {a: "CH", b: "DE", length_km: 753.17}
+  - {a: "CH", b: "ES", length_km: 1151.93}
+  - {a: "CH", b: "FR", length_km: 435.01}
+  - {a: "CH", b: "IT", length_km: 689.4}
+  - {a: "CY", b: "GR", length_km: 1091.07}
+  - {a: "CY", b: "IT", length_km: 1958.07}
+  - {a: "CZ", b: "DE", length_km: 279.85}
+  - {a: "CZ", b: "PL", length_km: 313.71}
+  - {a: "CZ", b: "SK", length_km: 291.06}
+  - {a: "DE", b: "DK", length_km: 354.74}
+  - {a: "DE", b: "LU", length_km: 602.64}
+  - {a: "DE", b: "NL", length_km: 577.36}
+  - {a: "DE", b: "PL", length_km: 241.15}
+  - {a: "DE", b: "RU", length_km: 1608.17}
+  - {a: "DK", b: "EE", length_km: 836.94}
+  - {a: "DK", b: "NL", length_km: 620.87}
+  - {a: "DK", b: "NO", length_km: 1252.46}
+  - {a: "DK", b: "RU", length_km: 1560.55}
+  - {a: "DK", b: "SE", length_km: 522.38}
+  - {a: "EE", b: "LV", length_km: 279.57}
+  - {a: "ES", b: "FR", length_km: 1052.45}
+  - {a: "ES", b: "IT", length_km: 1363.02}
+  - {a: "ES", b: "PT", length_km: 502.31}
+  - {a: "FR", b: "LU", length_km: 287.17}
+  - {a: "FR", b: "UK", length_km: 343.77}
+  - {a: "GR", b: "IT", length_km: 884.96}
+  - {a: "HR", b: "HU", length_km: 316.71}
+  - {a: "HR", b: "SL", length_km: 182.49}
+  - {a: "HU", b: "RO", length_km: 643.44}
+  - {a: "HU", b: "SK", length_km: 161.41}
+  - {a: "IT", b: "MT", length_km: 686.39}
+  - {a: "LT", b: "LV", length_km: 392.33}
+  - {a: "LT", b: "PL", length_km: 672.98}
+  - {a: "MT", b: "NL", length_km: 1978.61}
+  - {a: "NO", b: "SE", length_km: 738.21}
+  - {a: "PT", b: "UK", length_km: 1585.54}
+  - {a: "RO", b: "TR", length_km: 942.78}

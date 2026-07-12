@@ -1,0 +1,15 @@
+id: triangle
+version: "1.0"
+source: |
+  3-node complete graph with 5 km links - Phase-0 toy/debug topology
+  (qkdbench/topology/builtin.py triangle()).
+directed: false
+checksum: 26bf57adc725
+nodes:
+  - {id: "1"}
+  - {id: "2"}
+  - {id: "3"}
+links:
+  - {a: "1", b: "2", length_km: 5.0}
+  - {a: "1", b: "3", length_km: 5.0}
+  - {a: "2", b: "3", length_km: 5.0}

@@ -1,0 +1,156 @@
+id: germany50
+version: "1.0"
+source: |
+  Germany50: 50-node German national research network (DFN), 88 links.
+  Source: SNDlib (sndlib.zib.de, Zuse Institute Berlin), 'germany50'
+  instance, real WGS84 coordinates (coords = [lon, lat]) and real
+  geographic link distances in km (25.93-252.23, avg 100.68). Data via
+  the packaged JSON of the INFOCOM'27 RCKTA-FSE project
+  (rckta_fse/common/data/germany50_topology.json).
+  fiber_factor below is a global length multiplier applied at build
+  time (config-overridable). 1.0 keeps the real distances; the
+  INFOCOM'27 experiments used 0.16 (all links inside the finite-size
+  reach window) after earlier trials with 0.27.
+directed: false
+checksum: 246ca7cf5cfa
+fiber_factor: 1.0
+nodes:
+  - {id: "Aachen", coords: [6.04, 50.76]}
+  - {id: "Augsburg", coords: [10.9, 48.33]}
+  - {id: "Bayreuth", coords: [11.59, 49.93]}
+  - {id: "Berlin", coords: [13.39, 52.52]}
+  - {id: "Bielefeld", coords: [8.5, 52.04]}
+  - {id: "Braunschweig", coords: [10.55, 52.28]}
+  - {id: "Bremen", coords: [8.85, 53.11]}
+  - {id: "Bremerhaven", coords: [8.58, 53.54]}
+  - {id: "Chemnitz", coords: [12.93, 50.84]}
+  - {id: "Darmstadt", coords: [8.65, 49.89]}
+  - {id: "Dortmund", coords: [7.45, 51.51]}
+  - {id: "Dresden", coords: [13.73, 51.03]}
+  - {id: "Duesseldorf", coords: [6.77, 51.25]}
+  - {id: "Erfurt", coords: [11.04, 50.98]}
+  - {id: "Essen", coords: [7.02, 51.46]}
+  - {id: "Flensburg", coords: [9.45, 54.77]}
+  - {id: "Frankfurt", coords: [8.71, 50.12]}
+  - {id: "Freiburg", coords: [7.8, 47.98]}
+  - {id: "Fulda", coords: [9.69, 50.56]}
+  - {id: "Giessen", coords: [8.67, 50.57]}
+  - {id: "Greifswald", coords: [13.4, 54.09]}
+  - {id: "Hamburg", coords: [9.99, 53.57]}
+  - {id: "Hannover", coords: [9.72, 52.38]}
+  - {id: "Kaiserslautern", coords: [7.75, 49.43]}
+  - {id: "Karlsruhe", coords: [8.41, 49.01]}
+  - {id: "Kassel", coords: [9.51, 51.32]}
+  - {id: "Kempten", coords: [10.32, 47.72]}
+  - {id: "Kiel", coords: [10.12, 54.34]}
+  - {id: "Koblenz", coords: [7.52, 50.4]}
+  - {id: "Koeln", coords: [6.87, 50.94]}
+  - {id: "Konstanz", coords: [9.18, 47.66]}
+  - {id: "Leipzig", coords: [12.38, 51.34]}
+  - {id: "Magdeburg", coords: [11.64, 52.14]}
+  - {id: "Mannheim", coords: [8.49, 49.49]}
+  - {id: "Muenchen", coords: [11.57, 48.15]}
+  - {id: "Muenster", coords: [7.6, 51.97]}
+  - {id: "Norden", coords: [7.21, 53.6]}
+  - {id: "Nuernberg", coords: [11.03, 49.57]}
+  - {id: "Oldenburg", coords: [8.21, 53.11]}
+  - {id: "Osnabrueck", coords: [8.03, 52.28]}
+  - {id: "Passau", coords: [13.46, 48.57]}
+  - {id: "Regensburg", coords: [12.09, 49.0]}
+  - {id: "Saarbruecken", coords: [7.03, 49.23]}
+  - {id: "Schwerin", coords: [11.45, 53.55]}
+  - {id: "Siegen", coords: [8.03, 50.91]}
+  - {id: "Stuttgart", coords: [9.1, 48.74]}
+  - {id: "Trier", coords: [6.68, 49.75]}
+  - {id: "Ulm", coords: [9.99, 48.4]}
+  - {id: "Wesel", coords: [6.37, 51.39]}
+  - {id: "Wuerzburg", coords: [9.97, 49.78]}
+links:
+  - {a: "Duesseldorf", b: "Essen", length_km: 29.1}
+  - {a: "Dortmund", b: "Essen", length_km: 30.29}
+  - {a: "Wesel", b: "Essen", length_km: 45.73}
+  - {a: "Koeln", b: "Duesseldorf", length_km: 35.17}
+  - {a: "Aachen", b: "Koeln", length_km: 61.61}
+  - {a: "Koblenz", b: "Koeln", length_km: 75.52}
+  - {a: "Muenster", b: "Dortmund", length_km: 52.18}
+  - {a: "Siegen", b: "Dortmund", length_km: 78.0}
+  - {a: "Kassel", b: "Dortmund", length_km: 144.41}
+  - {a: "Wesel", b: "Aachen", length_km: 73.75}
+  - {a: "Trier", b: "Aachen", length_km: 121.17}
+  - {a: "Bielefeld", b: "Muenster", length_km: 62.1}
+  - {a: "Osnabrueck", b: "Muenster", length_km: 45.28}
+  - {a: "Siegen", b: "Koblenz", length_km: 67.15}
+  - {a: "Frankfurt", b: "Koblenz", length_km: 90.14}
+  - {a: "Kaiserslautern", b: "Koblenz", length_km: 109.11}
+  - {a: "Trier", b: "Koblenz", length_km: 93.9}
+  - {a: "Bielefeld", b: "Siegen", length_km: 129.8}
+  - {a: "Giessen", b: "Siegen", length_km: 58.8}
+  - {a: "Oldenburg", b: "Wesel", length_km: 228.61}
+  - {a: "Norden", b: "Wesel", length_km: 252.23}
+  - {a: "Leipzig", b: "Berlin", length_km: 148.36}
+  - {a: "Dresden", b: "Berlin", length_km: 167.32}
+  - {a: "Schwerin", b: "Berlin", length_km: 173.03}
+  - {a: "Magdeburg", b: "Berlin", length_km: 126.2}
+  - {a: "Greifswald", b: "Berlin", length_km: 174.58}
+  - {a: "Dresden", b: "Leipzig", length_km: 100.21}
+  - {a: "Erfurt", b: "Leipzig", length_km: 101.66}
+  - {a: "Magdeburg", b: "Leipzig", length_km: 102.51}
+  - {a: "Bayreuth", b: "Leipzig", length_km: 166.39}
+  - {a: "Erfurt", b: "Dresden", length_km: 188.29}
+  - {a: "Chemnitz", b: "Dresden", length_km: 59.91}
+  - {a: "Chemnitz", b: "Erfurt", length_km: 133.42}
+  - {a: "Kassel", b: "Erfurt", length_km: 113.21}
+  - {a: "Wuerzburg", b: "Erfurt", length_km: 153.49}
+  - {a: "Bayreuth", b: "Chemnitz", length_km: 138.79}
+  - {a: "Magdeburg", b: "Schwerin", length_km: 157.3}
+  - {a: "Greifswald", b: "Schwerin", length_km: 141.38}
+  - {a: "Hamburg", b: "Schwerin", length_km: 96.45}
+  - {a: "Kiel", b: "Schwerin", length_km: 123.66}
+  - {a: "Braunschweig", b: "Magdeburg", length_km: 75.88}
+  - {a: "Kiel", b: "Hamburg", length_km: 86.04}
+  - {a: "Hannover", b: "Hamburg", length_km: 133.55}
+  - {a: "Braunschweig", b: "Hamburg", length_km: 148.27}
+  - {a: "Oldenburg", b: "Bremen", length_km: 42.72}
+  - {a: "Bremerhaven", b: "Bremen", length_km: 51.07}
+  - {a: "Hannover", b: "Bremen", length_km: 100.09}
+  - {a: "Flensburg", b: "Kiel", length_km: 64.44}
+  - {a: "Norden", b: "Oldenburg", length_km: 85.87}
+  - {a: "Osnabrueck", b: "Oldenburg", length_km: 93.09}
+  - {a: "Bremerhaven", b: "Flensburg", length_km: 148.03}
+  - {a: "Bielefeld", b: "Hannover", length_km: 91.32}
+  - {a: "Braunschweig", b: "Hannover", length_km: 57.49}
+  - {a: "Osnabrueck", b: "Hannover", length_km: 115.37}
+  - {a: "Braunschweig", b: "Bielefeld", length_km: 142.36}
+  - {a: "Kassel", b: "Braunschweig", length_km: 128.49}
+  - {a: "Giessen", b: "Kassel", length_km: 102.07}
+  - {a: "Fulda", b: "Kassel", length_km: 85.44}
+  - {a: "Darmstadt", b: "Frankfurt", length_km: 25.93}
+  - {a: "Giessen", b: "Frankfurt", length_km: 50.12}
+  - {a: "Fulda", b: "Frankfurt", length_km: 85.03}
+  - {a: "Mannheim", b: "Darmstadt", length_km: 45.94}
+  - {a: "Kaiserslautern", b: "Darmstadt", length_km: 82.54}
+  - {a: "Karlsruhe", b: "Mannheim", length_km: 53.69}
+  - {a: "Saarbruecken", b: "Kaiserslautern", length_km: 56.72}
+  - {a: "Karlsruhe", b: "Kaiserslautern", length_km: 66.92}
+  - {a: "Fulda", b: "Giessen", length_km: 72.05}
+  - {a: "Saarbruecken", b: "Trier", length_km: 63.11}
+  - {a: "Wuerzburg", b: "Fulda", length_km: 88.99}
+  - {a: "Karlsruhe", b: "Saarbruecken", length_km: 103.36}
+  - {a: "Karlsruhe", b: "Stuttgart", length_km: 58.72}
+  - {a: "Ulm", b: "Stuttgart", length_km: 75.61}
+  - {a: "Konstanz", b: "Stuttgart", length_km: 120.24}
+  - {a: "Wuerzburg", b: "Stuttgart", length_km: 131.75}
+  - {a: "Freiburg", b: "Karlsruhe", length_km: 123.03}
+  - {a: "Augsburg", b: "Ulm", length_km: 67.68}
+  - {a: "Freiburg", b: "Konstanz", length_km: 109.0}
+  - {a: "Kempten", b: "Konstanz", length_km: 85.59}
+  - {a: "Augsburg", b: "Muenchen", length_km: 53.5}
+  - {a: "Kempten", b: "Muenchen", length_km: 104.68}
+  - {a: "Passau", b: "Muenchen", length_km: 147.24}
+  - {a: "Nuernberg", b: "Muenchen", length_km: 162.76}
+  - {a: "Regensburg", b: "Muenchen", length_km: 101.96}
+  - {a: "Wuerzburg", b: "Augsburg", length_km: 174.89}
+  - {a: "Regensburg", b: "Passau", length_km: 111.18}
+  - {a: "Bayreuth", b: "Nuernberg", length_km: 56.75}
+  - {a: "Wuerzburg", b: "Nuernberg", length_km: 79.77}
+  - {a: "Regensburg", b: "Nuernberg", length_km: 99.64}

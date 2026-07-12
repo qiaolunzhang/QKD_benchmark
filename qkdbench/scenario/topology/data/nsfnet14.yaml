@@ -1,0 +1,51 @@
+id: nsfnet14
+version: "1.0"
+source: |
+  NSFNET T1 backbone, 14 nodes / 21 links - the classic US optical
+  network benchmark topology. Link lengths (km, 300-2800) from
+  B. G. Bathula and V. M. Vokkarane, 'Constraint-Based Anycasting Over
+  Optical Burst Switched Networks', IEEE/OSA JOCN, as ported in the
+  ITU Journal project (utils/opttopology.py get_nsf_topology()).
+  Node ids 1..14 follow that reference (1=WA ... 14=MD/DC); no
+  coordinates in the source, so none are fabricated here.
+  Lengths are national-scale: for QKD reach (<= 70 km) use
+  make_instance(length_scale=...) - the INFOCOM'27 fiber_factor idea.
+directed: false
+checksum: 90282045472d
+nodes:
+  - {id: "1"}
+  - {id: "2"}
+  - {id: "3"}
+  - {id: "4"}
+  - {id: "5"}
+  - {id: "6"}
+  - {id: "7"}
+  - {id: "8"}
+  - {id: "9"}
+  - {id: "10"}
+  - {id: "11"}
+  - {id: "12"}
+  - {id: "13"}
+  - {id: "14"}
+links:
+  - {a: "1", b: "2", length_km: 1100}
+  - {a: "1", b: "3", length_km: 1600}
+  - {a: "1", b: "8", length_km: 2800}
+  - {a: "2", b: "3", length_km: 600}
+  - {a: "2", b: "4", length_km: 1000}
+  - {a: "3", b: "6", length_km: 2000}
+  - {a: "4", b: "5", length_km: 600}
+  - {a: "4", b: "11", length_km: 2400}
+  - {a: "5", b: "6", length_km: 1100}
+  - {a: "5", b: "7", length_km: 800}
+  - {a: "6", b: "10", length_km: 1200}
+  - {a: "6", b: "13", length_km: 2000}
+  - {a: "7", b: "8", length_km: 700}
+  - {a: "8", b: "9", length_km: 700}
+  - {a: "9", b: "10", length_km: 900}
+  - {a: "9", b: "12", length_km: 500}
+  - {a: "9", b: "14", length_km: 500}
+  - {a: "11", b: "12", length_km: 800}
+  - {a: "11", b: "14", length_km: 800}
+  - {a: "12", b: "13", length_km: 300}
+  - {a: "13", b: "14", length_km: 300}

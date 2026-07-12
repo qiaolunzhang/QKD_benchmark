@@ -1,0 +1,20 @@
+id: poliqi5
+version: "1.0"
+source: |
+  PoliQi 5-node ring with 5 km links (Politecnico di Milano QKD testbed
+  layout) - Phase-0 small topology (qkdbench/topology/builtin.py
+  poliqi5()).
+directed: false
+checksum: 41cdd2262f05
+nodes:
+  - {id: "1"}
+  - {id: "2"}
+  - {id: "3"}
+  - {id: "4"}
+  - {id: "5"}
+links:
+  - {a: "1", b: "2", length_km: 5.0}
+  - {a: "2", b: "3", length_km: 5.0}
+  - {a: "3", b: "4", length_km: 5.0}
+  - {a: "4", b: "5", length_km: 5.0}
+  - {a: "1", b: "5", length_km: 5.0}

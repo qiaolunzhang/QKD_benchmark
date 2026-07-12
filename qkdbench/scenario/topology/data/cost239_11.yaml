@@ -1,0 +1,52 @@
+id: cost239_11
+version: "1.0"
+source: |
+  COST 239 European optical network, 11 nodes / 26 links (dense mesh,
+  degree 4-5). From the COST 239 Action 'Ultra-high capacity optical
+  transmission networks' (O'Mahony et al.). This is the variant whose
+  node set includes Rome (some literature versions use Luxembourg
+  instead); node/link table taken verbatim from
+  KnowledgeBase/topology/cost239/cost239-topology.md (link length span
+  170-1100 km). No coordinates in that source, so none are fabricated.
+  For QKD reach use make_instance(length_scale=...).
+directed: false
+checksum: f50de8e6a1d7
+nodes:
+  - {id: "London"}
+  - {id: "Paris"}
+  - {id: "Brussels"}
+  - {id: "Amsterdam"}
+  - {id: "Berlin"}
+  - {id: "Copenhagen"}
+  - {id: "Prague"}
+  - {id: "Vienna"}
+  - {id: "Milan"}
+  - {id: "Rome"}
+  - {id: "Zurich"}
+links:
+  - {a: "London", b: "Paris", length_km: 350}
+  - {a: "London", b: "Brussels", length_km: 320}
+  - {a: "London", b: "Amsterdam", length_km: 360}
+  - {a: "London", b: "Milan", length_km: 950}
+  - {a: "Paris", b: "Brussels", length_km: 260}
+  - {a: "Paris", b: "Milan", length_km: 640}
+  - {a: "Paris", b: "Rome", length_km: 1100}
+  - {a: "Paris", b: "Zurich", length_km: 490}
+  - {a: "Brussels", b: "Amsterdam", length_km: 170}
+  - {a: "Brussels", b: "Berlin", length_km: 650}
+  - {a: "Brussels", b: "Zurich", length_km: 490}
+  - {a: "Amsterdam", b: "Milan", length_km: 830}
+  - {a: "Amsterdam", b: "Berlin", length_km: 580}
+  - {a: "Amsterdam", b: "Copenhagen", length_km: 620}
+  - {a: "Berlin", b: "Copenhagen", length_km: 360}
+  - {a: "Berlin", b: "Prague", length_km: 280}
+  - {a: "Berlin", b: "Vienna", length_km: 520}
+  - {a: "Berlin", b: "Milan", length_km: 840}
+  - {a: "Copenhagen", b: "Prague", length_km: 650}
+  - {a: "Prague", b: "Vienna", length_km: 250}
+  - {a: "Prague", b: "Zurich", length_km: 510}
+  - {a: "Vienna", b: "Milan", length_km: 620}
+  - {a: "Vienna", b: "Rome", length_km: 760}
+  - {a: "Milan", b: "Rome", length_km: 480}
+  - {a: "Milan", b: "Zurich", length_km: 220}
+  - {a: "Rome", b: "Zurich", length_km: 690}

@@ -1,0 +1,35 @@
+id: german7
+version: "1.0"
+source: |
+  7-node German backbone, 11 links (QKD literature small topology; JSAC
+  LC-FCRP / INFOCOM'27 RCKTA-FSE line of work). Link table ported from
+  qkdbench/topology/builtin.py _GERMAN7_LINKS (Phase 0). Link lengths are
+  drawn per experiment seed: random.Random(2000 + seed), U[lo, hi] km,
+  round 2, in the file order of the links below - bit-for-bit identical
+  to the Phase-0 german7() implementation and the INFOCOM'27 convention.
+directed: false
+length_policy:
+  mode: uniform
+  lo: 2.0
+  hi: 8.0
+  base_seed: 2000
+nodes:
+  - {id: "1"}
+  - {id: "2"}
+  - {id: "3"}
+  - {id: "4"}
+  - {id: "5"}
+  - {id: "6"}
+  - {id: "7"}
+links:
+  - {a: "1", b: "2"}
+  - {a: "1", b: "7"}
+  - {a: "2", b: "3"}
+  - {a: "2", b: "6"}
+  - {a: "2", b: "7"}
+  - {a: "3", b: "4"}
+  - {a: "3", b: "6"}
+  - {a: "4", b: "5"}
+  - {a: "4", b: "6"}
+  - {a: "5", b: "6"}
+  - {a: "6", b: "7"}

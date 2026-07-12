@@ -1,0 +1,85 @@
+id: usnet24
+version: "1.0"
+source: |
+  24-node USnet-like mesh: 4x6 grid backbone (38 edges) + 5 diagonal
+  chords = 43 undirected links; the size/structure of the 24-node USnet
+  used in the RCKTA journal. Ported from INFOCOM'27 RCKTA-FSE
+  rckta_fse/common/instances.py _usnet_edges(). Link lengths are drawn
+  per experiment seed: random.Random(1000 + seed), U[lo, hi] km, round 2,
+  in the file order of the links below (grid rows, then columns, then
+  chords) - bit-for-bit identical to the INFOCOM'27 implementation.
+directed: false
+length_policy:
+  mode: uniform
+  lo: 2.0
+  hi: 8.0
+  base_seed: 1000
+nodes:
+  - {id: "1"}
+  - {id: "2"}
+  - {id: "3"}
+  - {id: "4"}
+  - {id: "5"}
+  - {id: "6"}
+  - {id: "7"}
+  - {id: "8"}
+  - {id: "9"}
+  - {id: "10"}
+  - {id: "11"}
+  - {id: "12"}
+  - {id: "13"}
+  - {id: "14"}
+  - {id: "15"}
+  - {id: "16"}
+  - {id: "17"}
+  - {id: "18"}
+  - {id: "19"}
+  - {id: "20"}
+  - {id: "21"}
+  - {id: "22"}
+  - {id: "23"}
+  - {id: "24"}
+links:
+  - {a: "1", b: "2"}
+  - {a: "2", b: "3"}
+  - {a: "3", b: "4"}
+  - {a: "5", b: "6"}
+  - {a: "6", b: "7"}
+  - {a: "7", b: "8"}
+  - {a: "9", b: "10"}
+  - {a: "10", b: "11"}
+  - {a: "11", b: "12"}
+  - {a: "13", b: "14"}
+  - {a: "14", b: "15"}
+  - {a: "15", b: "16"}
+  - {a: "17", b: "18"}
+  - {a: "18", b: "19"}
+  - {a: "19", b: "20"}
+  - {a: "21", b: "22"}
+  - {a: "22", b: "23"}
+  - {a: "23", b: "24"}
+  - {a: "1", b: "5"}
+  - {a: "2", b: "6"}
+  - {a: "3", b: "7"}
+  - {a: "4", b: "8"}
+  - {a: "5", b: "9"}
+  - {a: "6", b: "10"}
+  - {a: "7", b: "11"}
+  - {a: "8", b: "12"}
+  - {a: "9", b: "13"}
+  - {a: "10", b: "14"}
+  - {a: "11", b: "15"}
+  - {a: "12", b: "16"}
+  - {a: "13", b: "17"}
+  - {a: "14", b: "18"}
+  - {a: "15", b: "19"}
+  - {a: "16", b: "20"}
+  - {a: "17", b: "21"}
+  - {a: "18", b: "22"}
+  - {a: "19", b: "23"}
+  - {a: "20", b: "24"}
+  - {a: "1", b: "6"}
+  - {a: "3", b: "8"}
+  - {a: "9", b: "14"}
+  - {a: "11", b: "16"}
+  - {a: "17", b: "22"}

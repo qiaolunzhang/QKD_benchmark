@@ -1,0 +1,39 @@
+[build-system]
+requires = ["setuptools>=64"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "qkdbench"
+version = "0.1.0"
+description = "A benchmark framework for resource-optimization algorithms in QKD networks"
+readme = "README.md"
+requires-python = ">=3.9"
+license = { text = "MIT" }
+authors = [{ name = "Qiaolun Zhang", email = "qiaolunzhang@gmail.com" }]
+keywords = ["QKD", "quantum networks", "benchmark", "optimization"]
+dependencies = [
+    "networkx>=2.6",
+    "pyyaml>=6.0",
+    "matplotlib>=3.4",
+]
+
+[project.optional-dependencies]
+ilp = ["pulp>=2.7"]
+dev = ["pytest>=7.0"]
+
+[project.scripts]
+qkdbench = "qkdbench.cli:main"
+
+[tool.setuptools.packages.find]
+include = ["qkdbench*"]
+
+[tool.setuptools.package-data]
+qkdbench = ["scenario/topology/data/*.yaml"]
+
+[tool.pytest.ini_options]
+# PuLP 3.x emits DeprecationWarnings for its own upcoming 4.0 API changes
+# (LpVariable construction, PULP_CBC_CMD); they are not actionable here.
+filterwarnings = [
+    "ignore::DeprecationWarning:pulp",
+    "ignore::DeprecationWarning:pulp.pulp",
+]
