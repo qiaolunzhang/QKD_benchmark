@@ -27,7 +27,10 @@ import json
 from dataclasses import dataclass, field, asdict
 from typing import Dict, List
 
+from typing import Optional
+
 from .demand import Demand, Request  # noqa: F401  (Request = alias)
+from .key_pool import KeyPool
 from .network import Edge, Network, edge_key  # noqa: F401
 
 
@@ -48,6 +51,10 @@ class Instance:
             :mod:`qkdbench.scenario.qkd_models`).
         qkd_model_params: optional model constructor parameters, e.g.
             ``{"rate_kbps": 50}`` or ``{"table": "fse_1310_coex"}``.
+        key_pools: per-link key pools for dynamic problems (P2); empty for
+            static problems.
+        horizon_s: continuous-time horizon in seconds for dynamic problems
+            (``None`` for slot-based static problems).
         metadata: free-form provenance info (generator, seed, ...).
     """
     name: str
@@ -57,6 +64,8 @@ class Instance:
     slot_seconds: float = 1.0
     rate_table: str = "fse_1540_alone"
     qkd_model_params: dict = field(default_factory=dict)
+    key_pools: List[KeyPool] = field(default_factory=list)
+    horizon_s: Optional[float] = None
     metadata: dict = field(default_factory=dict)
 
     # ------------------------------------------- flat views (Phase-0 API)
@@ -108,6 +117,8 @@ class Instance:
             "slot_seconds": self.slot_seconds,
             "rate_table": self.rate_table,
             "qkd_model_params": self.qkd_model_params,
+            "key_pools": [p.to_dict() for p in self.key_pools],
+            "horizon_s": self.horizon_s,
             "metadata": self.metadata,
         }
 
@@ -123,6 +134,8 @@ class Instance:
         d = dict(d)
         d["network"] = Network.from_dict(d["network"])
         d["demands"] = [Demand(**r) for r in d["demands"]]
+        if d.get("key_pools"):
+            d["key_pools"] = [KeyPool.from_dict(p) for p in d["key_pools"]]
         return cls(**d)
 
     @classmethod

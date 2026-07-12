@@ -14,6 +14,7 @@ from .constraints import P1_CONSTRAINTS
 from . import constraints as _c        # noqa: F401  (register constraints)
 from . import decisions as _d          # noqa: F401  (register decisions)
 from . import objectives as _o         # noqa: F401  (register objectives)
+from . import dynamic as _dyn          # noqa: F401  (register P2 modules)
 
 P1_DECISIONS = ["path_selection", "wavelength_assignment", "tp_scheduling"]
 P1_OBJECTIVES = ["max_accepted_demands", "max_surplus_keys"]

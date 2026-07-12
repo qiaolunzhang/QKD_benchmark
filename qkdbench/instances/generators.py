@@ -121,3 +121,67 @@ def make_instance(topology: str, n_req: int, seed: int,
         qkd_model_params=dict(qkd_model_params or {}),
         metadata=meta,
     )
+
+
+def make_dynamic_instance(topology: str, n_demands: int, seed: int,
+                          arrival_rate: float = 1.0, mean_holding: float = 5.0,
+                          rate_lo_kbps: float = 5.0, rate_hi_kbps: float = 20.0,
+                          wavelengths: int = 2, rate_table: str = "constant",
+                          qkd_model_params: dict = None,
+                          pool_capacity_kb: float = 1e6,
+                          pool_init_kb: float = 0.0,
+                          length_scale: Optional[float] = None,
+                          topology_kwargs: dict = None) -> Instance:
+    """Factory for a dynamic admission + key-pool instance (P2).
+
+    Demands arrive as a Poisson process (rate ``arrival_rate``) with
+    exponential holding times (mean ``mean_holding``), each requiring a
+    sustained key rate drawn uniformly in
+    ``[rate_lo_kbps, rate_hi_kbps]`` between a random reachable node pair.
+    Every link gets a :class:`~qkdbench.core.key_pool.KeyPool` whose
+    generation rate is the link's secret-key rate under the instance's
+    QKD model.  All randomness derives from ``seed``.
+    """
+    from ..core.key_pool import KeyPool
+    from ..scenario.qkd_models import get_qkd_model
+
+    base = make_instance(topology, 0, seed, wavelengths=wavelengths,
+                         rate_table=rate_table,
+                         qkd_model_params=qkd_model_params,
+                         length_scale=length_scale,
+                         topology_kwargs=topology_kwargs)
+    network = base.network
+    model = get_qkd_model(rate_table, **(qkd_model_params or {}))
+
+    # per-link key pools; generation rate = link secret-key rate x lambdas
+    pools = []
+    for link in network.links:
+        gen = model.evaluate(link.length_km).skr_kbps * link.wavelengths
+        a, b = link.endpoints
+        pools.append(KeyPool(pool_id=f"{a}-{b}", link=(a, b),
+                             gen_kbps=round(gen, 6),
+                             capacity_kb=pool_capacity_kb,
+                             init_kb=pool_init_kb))
+
+    # Poisson arrivals + exponential holding; random reachable pairs
+    rng = random.Random(seed)
+    node_ids = network.node_ids()
+    demands, t = [], 0.0
+    for k in range(n_demands):
+        t += rng.expovariate(arrival_rate)
+        src, dst = rng.sample(node_ids, 2)
+        demands.append(Request(
+            id=k + 1, src=src, dst=dst, volume_kb=0.0, deadline_slot=0,
+            arrival_t=round(t, 6),
+            holding_t=round(rng.expovariate(1.0 / mean_holding), 6),
+            rate_kbps=round(rng.uniform(rate_lo_kbps, rate_hi_kbps), 3)))
+    horizon = round(t + mean_holding, 6)
+
+    meta = {"generator": "make_dynamic_instance", "topology": topology,
+            "seed": seed, "arrival_rate": arrival_rate,
+            "mean_holding": mean_holding}
+    return Instance(
+        name=f"{topology}_dyn{n_demands}_s{seed}",
+        network=network, demands=demands,
+        rate_table=rate_table, qkd_model_params=dict(qkd_model_params or {}),
+        key_pools=pools, horizon_s=horizon, metadata=meta)

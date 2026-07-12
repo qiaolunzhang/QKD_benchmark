@@ -70,12 +70,16 @@
 - [x] **差分等价测试**:composed verify 与冻结版在 120 个随机 valid/corrupted 解上逐字一致(tests/test_problem_equiv.py,3 测试);59 测试全绿;quickstart 9/20 1050kb 回归不变
 - [ ] 完整移植 INFOCOM27 DA-FSE(多路径流+QKP)作为 P1 扩展(当前 fse_greedy 是单 TP 投影)→ 挪到 Backlog
 
-## Phase 5 — 动态问题 P2(admission + key pool)
+## Phase 5 — 动态问题 P2(admission + key pool)(完成)
 
-- [ ] 事件引擎(仅三类事件:到达/离开/故障)+ TimeModel(poisson 到达)
-- [ ] OnlineAlgorithm 接口 + 框架事件循环合成 Solution
-- [ ] KeyPool 对象 + key-pool 轨迹指标;greedy_admission 基线
-- [ ] preset `dynamic_admission_keypool`
+- [x] `core/key_pool.py`:KeyPool(per-link,gen_kbps/capacity/init);Demand 加 rate_kbps;Instance 加 key_pools/horizon_s(JSON 序列化)
+- [x] `scenario/simulator.py`:离散事件引擎(到达/离开)+ SimState(committed rate)+ `simulate`(驱动 controller)+ `replay_violations`(独立回放校验,verifier 与算法共用同一模型)
+- [x] `algorithms/online.py`:OnlineAlgorithm 接口(reset/act/finalize;solve 驱动 simulate 合成 Solution)+ `greedy_admission` 基线
+- [x] `instances/generators.py`:`make_dynamic_instance`(Poisson 到达 + 指数 holding + 每链路 KeyPool,gen=QKD 模型速率)
+- [x] `problems/dynamic.py`:P2 决策/约束(keypool_capacity 回放)/目标(acceptance_ratio/blocking/served_rate)+ preset `dynamic_admission_keypool`;runner evaluate 按 horizon_s 分流
+- [x] tests/test_dynamic_p2.py(6 测试:形状/JSON/确定性/负载↑acceptance↓/**对抗越界被 verifier 抓**/目标一致);65 测试全绿;P1 回归 9/20 1050kb 不变
+- [x] examples/dynamic_admission.py(负载 2/6/10 → acceptance 56%/38%/34% 单调下降)
+- 注:故障事件(link/node failure)接口预留,v1 未实现(→ Backlog / Phase 6+)
 
 ## Phase 6 — P3 trusted-relay placement
 

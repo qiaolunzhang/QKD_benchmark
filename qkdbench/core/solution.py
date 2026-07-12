@@ -55,19 +55,44 @@ class Assignment:
 
 
 @dataclass
+class Admission:
+    """A dynamic-problem (P2) admission decision.
+
+    An online controller admits demand ``demand_id`` at time ``admit_t``
+    (its arrival time) onto ``route`` (links in path order); the demand
+    then draws its required key rate from every link's pool until it
+    departs.  Rejected demands simply have no ``Admission``.
+    """
+    demand_id: int
+    route: List[Edge]
+    admit_t: float
+
+
+@dataclass
 class Solution:
-    """What an algorithm hands back to the benchmark."""
+    """What an algorithm hands back to the benchmark.
+
+    P1 (static) algorithms populate ``assignments``; P2 (dynamic
+    admission) algorithms populate ``admissions``.  Both share the same
+    independent-verification pipeline.
+    """
     algorithm: str
     assignments: List[Assignment] = field(default_factory=list)
+    admissions: List[Admission] = field(default_factory=list)
     extras: dict = field(default_factory=dict)   # algorithm-specific info
 
     @property
     def served_ids(self):
         return {a.request_id for a in self.assignments}
 
+    @property
+    def admitted_ids(self):
+        return {a.demand_id for a in self.admissions}
+
     def to_dict(self) -> dict:
         return {
             "algorithm": self.algorithm,
             "assignments": [asdict(a) for a in self.assignments],
+            "admissions": [asdict(a) for a in self.admissions],
             "extras": self.extras,
         }

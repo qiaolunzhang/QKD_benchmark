@@ -30,6 +30,7 @@ class Result:
     feasible: bool = True            # verifier verdict
     status: str = "ok"               # ok | infeasible | error
     violations: list = field(default_factory=list)
+    objectives: dict = field(default_factory=dict)   # problem objective values
     extras: dict = field(default_factory=dict)
 
     @property

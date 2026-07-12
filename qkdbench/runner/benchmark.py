@@ -40,6 +40,9 @@ def evaluate(instance: Instance, algorithm: Algorithm,
                       feasible=False, status="error",
                       violations=[f"{type(exc).__name__}: {exc}"])
 
+    if instance.horizon_s is not None:      # dynamic problem (P2)
+        return _evaluate_dynamic(instance, algorithm, solution, runtime, seed)
+
     verdict = verify(instance, solution)
     model = get_qkd_model(instance.rate_table, **instance.qkd_model_params)
     delivered = surplus = 0.0
@@ -63,6 +66,28 @@ def evaluate(instance: Instance, algorithm: Algorithm,
         violations=verdict.violations,
         extras={**solution.extras, "qkd_model": model.name,
                 "qkd_model_version": model.version},
+    )
+
+
+def _evaluate_dynamic(instance, algorithm, solution, runtime, seed) -> Result:
+    """Verify and score a dynamic (P2) solution via its problem modules."""
+    from ..problems.base import get_problem
+
+    problem = get_problem("dynamic_admission_keypool")
+    verdict = problem.verify(instance, solution)
+    objectives = problem.evaluate_objectives(instance, solution) \
+        if verdict.ok else {}
+    return Result(
+        algorithm=algorithm.name, instance=instance.name,
+        fingerprint=instance.fingerprint(), seed=seed,
+        served=len(solution.admitted_ids) if verdict.ok else 0,
+        total_requests=len(instance.demands),
+        runtime_s=round(runtime, 6),
+        feasible=verdict.ok,
+        status="ok" if verdict.ok else "infeasible",
+        violations=verdict.violations,
+        objectives=objectives,
+        extras=dict(solution.extras),
     )
 
 

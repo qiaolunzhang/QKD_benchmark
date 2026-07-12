@@ -27,6 +27,8 @@ class Demand:
         arrival_t: arrival time for dynamic problems (``None`` = static,
             known at t=0).
         holding_t: how long the demand stays in the system (dynamic).
+        rate_kbps: required sustained secret-key rate (kb/s) for dynamic
+            admission problems (``None`` = static volume-based demand).
         metadata: free-form annotations only.
     """
     id: int
@@ -37,6 +39,7 @@ class Demand:
     priority: int = 0
     arrival_t: Optional[float] = None
     holding_t: Optional[float] = None
+    rate_kbps: Optional[float] = None
     metadata: dict = field(default_factory=dict)
 
 

@@ -34,7 +34,8 @@ from .scenario.topology import (TopologyProvider, build_topology,
                                 logical_graph)
 from .problems import (Problem, DecisionModule, ConstraintModule,
                        ObjectiveModule, get_problem, list_problems)
-from .instances.generators import make_instance, uniform_requests
+from .instances.generators import (make_instance, make_dynamic_instance,
+                                   uniform_requests)
 from .runner.benchmark import evaluate, run_benchmark
 from .runner.config import ExperimentConfig
 
@@ -49,6 +50,6 @@ __all__ = [
     "TopologyProvider", "build_topology", "logical_graph",
     "Problem", "DecisionModule", "ConstraintModule", "ObjectiveModule",
     "get_problem", "list_problems",
-    "make_instance", "uniform_requests",
+    "make_instance", "make_dynamic_instance", "uniform_requests",
     "evaluate", "run_benchmark", "ExperimentConfig",
 ]
