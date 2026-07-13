@@ -1,0 +1,19 @@
+# Frozen paper experiment (P1): static routing on German-7.
+# Reproduce:  qkdbench run -c configs/paper_v1/p1_german7.yaml
+# Produces results/paper_v1/p1_german7.csv + .meta.json; plot the `served`
+# and `delivered_kb` columns vs #requests with qkdbench.evaluation.plots.
+name: paper_v1_p1_german7
+output: results/paper_v1/p1_german7.csv
+algorithms: [greedy_sp, key_aware_sp, fse_greedy, local_search, milp_p1]
+instances:
+  topology: german7
+  n_requests: [10, 15, 20, 25, 30]
+  seeds: [1, 2, 3, 4, 5]
+  num_slots: 5
+  wavelengths: 2
+  modules_per_node: 2
+  mean_volume_kb: 100
+  rate_table: fse_1540_alone
+algo_params:
+  local_search: {seed: 0, budget_iters: 50, restarts: 4}
+  milp_p1: {time_limit_s: 120, k_paths: 5}

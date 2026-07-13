@@ -39,13 +39,26 @@ def main(argv=None):
         from .runner.config import ExperimentConfig
         cfg = ExperimentConfig.from_yaml(args.config)
         csv_path = args.output or cfg.output
-        results = run_benchmark(cfg.build_instances(), cfg.algorithms,
+        instances = list(cfg.build_instances())    # materialize once
+        results = run_benchmark(instances, cfg.algorithms,
                                 algo_params=cfg.algo_params,
                                 csv_path=csv_path,
                                 verbose=not args.quiet)
         ok = sum(r.status == "ok" for r in results)
-        print(f"\n{cfg.name}: {ok}/{len(results)} runs ok"
-              + (f", results appended to {csv_path}" if csv_path else ""))
+        msg = f"\n{cfg.name}: {ok}/{len(results)} runs ok"
+        if csv_path:
+            # write reproducibility metadata next to the results CSV
+            from pathlib import Path
+            from .runner.provenance import build_metadata, write_metadata
+            meta_path = Path(csv_path).with_name(
+                Path(csv_path).stem + ".meta.json")
+            meta = build_metadata(cfg.name, {
+                "algorithms": cfg.algorithms,
+                "instances": cfg.instances,
+                "algo_params": cfg.algo_params}, instances)
+            write_metadata(meta_path, meta)
+            msg += f", results -> {csv_path}, metadata -> {meta_path}"
+        print(msg)
 
 
 if __name__ == "__main__":

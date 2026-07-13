@@ -185,3 +185,68 @@ def make_dynamic_instance(topology: str, n_demands: int, seed: int,
         network=network, demands=demands,
         rate_table=rate_table, qkd_model_params=dict(qkd_model_params or {}),
         key_pools=pools, horizon_s=horizon, metadata=meta)
+
+
+def make_placement_instance(topology: str, n_demands: int, seed: int,
+                            rate_table: str = "fse_1540_alone",
+                            qkd_model_params: dict = None,
+                            length_scale: Optional[float] = None,
+                            user_frac: float = 0.5,
+                            cost_lo: float = 1.0, cost_hi: float = 1.0,
+                            topology_kwargs: dict = None) -> Instance:
+    """Factory for a trusted-relay placement instance (P3).
+
+    A fraction ``user_frac`` of nodes are *users* (always equipped, free);
+    the rest are candidate relays.  Demands connect user pairs that are
+    reachable over QKD-feasible links only by passing through at least one
+    non-user node — so serving them genuinely requires placing relays
+    (the empty placement leaves them uncovered).  Each node gets an
+    installation cost in ``[cost_lo, cost_hi]``; only coverable pairs are
+    used, so a feasible placement always exists.
+    """
+    from ..scenario.qkd_models import get_qkd_model
+    from ..problems.placement import feasible_link_graph
+    import networkx as nx
+
+    base = make_instance(topology, 0, seed, rate_table=rate_table,
+                         qkd_model_params=qkd_model_params,
+                         length_scale=length_scale,
+                         topology_kwargs=topology_kwargs)
+    network = base.network
+    model = get_qkd_model(rate_table, **(qkd_model_params or {}))
+    fg = feasible_link_graph(base, model)
+
+    rng = random.Random(seed)
+    nodes = network.node_ids()
+    n_users = max(2, int(round(len(nodes) * user_frac)))
+    users = set(rng.sample(nodes, n_users))
+    user_only = fg.subgraph(users)
+
+    # user pairs reachable overall, but NOT through users alone -> need a relay
+    relay_pairs = []
+    for i, a in enumerate(sorted(users)):
+        for b in sorted(users)[i + 1:]:
+            if not (a in fg and b in fg and nx.has_path(fg, a, b)):
+                continue
+            if a in user_only and b in user_only \
+                    and nx.has_path(user_only, a, b):
+                continue    # already served without relays
+            relay_pairs.append((a, b))
+    rng.shuffle(relay_pairs)
+    if not relay_pairs:
+        raise ValueError(
+            f"{topology}: no relay-needing user pairs (try more nodes, a "
+            f"smaller user_frac, or a length_scale that shortens reach)")
+    pairs = [relay_pairs[k % len(relay_pairs)] for k in range(n_demands)]
+    demands = [Request(id=k + 1, src=s, dst=t, volume_kb=0.0, deadline_slot=0)
+               for k, (s, t) in enumerate(pairs)]
+
+    costs = {n: round(rng.uniform(cost_lo, cost_hi), 3) for n in nodes}
+    meta = {"generator": "make_placement_instance", "topology": topology,
+            "seed": seed, "problem_family": "placement",
+            "users": sorted(users), "install_costs": costs}
+    return Instance(
+        name=f"{topology}_place{n_demands}_s{seed}",
+        network=network, demands=demands,
+        rate_table=rate_table, qkd_model_params=dict(qkd_model_params or {}),
+        metadata=meta)

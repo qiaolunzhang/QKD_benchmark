@@ -81,18 +81,25 @@
 - [x] examples/dynamic_admission.py(负载 2/6/10 → acceptance 56%/38%/34% 单调下降)
 - 注:故障事件(link/node failure)接口预留,v1 未实现(→ Backlog / Phase 6+)
 
-## Phase 6 — P3 trusted-relay placement
+## Phase 6 — P3 trusted-relay placement(完成)
 
-- [ ] placement 决策/约束/目标模块 + preset;milp_placement;部署成本指标
-- [ ] 验收:三问题共用同一 runner/评测,无问题特判代码
+- [x] `problems/placement.py`:relay_placement 决策 + placement_validity/demand_coverage 约束 + deployment_cost/num_relays 目标 + preset `trusted_relay_placement`;covered_demands 供 verifier 与算法共用
+- [x] `algorithms/placement.py`:greedy_placement(反向贪心,总产出可行覆盖)+ milp_placement(节点激活多商品流 MILP,PuLP+CBC)
+- [x] `instances/generators.py`:`make_placement_instance`(user_frac 用户节点 + 需经 relay 的多跳需求 + 安装成本)
+- [x] `Solution.placement` 组件;runner `_evaluate_problem` 泛化(P2/P3 共用),按 metadata.problem_family 分流
+- [x] tests/test_placement_p3.py(6 测试);usnet24 上 greedy 3 relays / MILP 最优 2;MILP cost ≤ greedy;越界节点被 verifier 抓;71 测试全绿
+- [x] examples/relay_placement.py;三问题共用同一 runner/评测,无问题特判(evaluate 仅按 instance 特征分流)
 
-## Phase 7 — 实验管理与论文实验
+## Phase 7 — 实验管理与论文实验(核心完成)
 
-- [ ] `meta.json`(config hash/fingerprints/commit/版本/环境)+ 断点续跑完善
-- [ ] 多 seed 聚合:mean±std + 95% CI;`evaluation/plots.py` 统一画图
-- [ ] capability 检查器(validation/)接入 runner 前置
-- [ ] `configs/paper_v1/` 冻结论文实验;一条命令复现全部图
-- [ ] 文档站(Sphinx 或 mkdocs)+ GitHub Actions CI
+- [x] `runner/provenance.py`:meta.json(config_hash/instance fingerprints/code commit/python+依赖版本/OS);CLI run 自动写在 CSV 旁
+- [x] `evaluation/aggregate.py`:多 seed mean±std + Student-t 95% CI(内置 t 表,无 scipy 依赖);aggregate_by 出算法曲线
+- [x] `evaluation/plots.py`:plot_metric 统一画图(metric vs 扫描变量,带 CI 误差棒,存 PDF/PNG)
+- [x] `validation/capability.py`:capability 检查(静态算法 vs 动态问题不兼容会报错)
+- [x] `configs/paper_v1/p1_german7.yaml`:冻结论文实验(5 算法 × 5 负载 × 5 seed)
+- [x] tests/test_evaluation.py(4 测试);75 测试全绿;run→meta→aggregate→plot 端到端验证
+- [ ] 文档站(Sphinx/mkdocs)+ GitHub Actions CI → Backlog
+- [ ] 跑 paper_v1 全量 + 生成论文图替换 .tex 占位 → 待办(需较长算力)
 
 ## 论文(overleaf_QKD_benchmark/,与代码并行)
 

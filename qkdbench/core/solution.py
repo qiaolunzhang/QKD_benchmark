@@ -79,6 +79,7 @@ class Solution:
     algorithm: str
     assignments: List[Assignment] = field(default_factory=list)
     admissions: List[Admission] = field(default_factory=list)
+    placement: List[str] = field(default_factory=list)   # relay node ids (P3)
     extras: dict = field(default_factory=dict)   # algorithm-specific info
 
     @property
@@ -94,5 +95,6 @@ class Solution:
             "algorithm": self.algorithm,
             "assignments": [asdict(a) for a in self.assignments],
             "admissions": [asdict(a) for a in self.admissions],
+            "placement": list(self.placement),
             "extras": self.extras,
         }

@@ -41,7 +41,13 @@ def evaluate(instance: Instance, algorithm: Algorithm,
                       violations=[f"{type(exc).__name__}: {exc}"])
 
     if instance.horizon_s is not None:      # dynamic problem (P2)
-        return _evaluate_dynamic(instance, algorithm, solution, runtime, seed)
+        return _evaluate_problem(instance, algorithm, solution, runtime, seed,
+                                 "dynamic_admission_keypool",
+                                 lambda s: len(s.admitted_ids))
+    if instance.metadata.get("problem_family") == "placement":   # P3
+        return _evaluate_problem(instance, algorithm, solution, runtime, seed,
+                                 "trusted_relay_placement",
+                                 lambda s: len(set(s.placement)))
 
     verdict = verify(instance, solution)
     model = get_qkd_model(instance.rate_table, **instance.qkd_model_params)
@@ -69,18 +75,25 @@ def evaluate(instance: Instance, algorithm: Algorithm,
     )
 
 
-def _evaluate_dynamic(instance, algorithm, solution, runtime, seed) -> Result:
-    """Verify and score a dynamic (P2) solution via its problem modules."""
+def _evaluate_problem(instance, algorithm, solution, runtime, seed,
+                      problem_name, served_count) -> Result:
+    """Verify and score a solution via a named problem's modules.
+
+    Used for problems whose metrics come from the composed objective
+    modules rather than P1's key-volume accounting (P2 dynamic, P3
+    placement).  ``served_count`` extracts the headline integer count from
+    the Solution for the CSV ``served`` column.
+    """
     from ..problems.base import get_problem
 
-    problem = get_problem("dynamic_admission_keypool")
+    problem = get_problem(problem_name)
     verdict = problem.verify(instance, solution)
     objectives = problem.evaluate_objectives(instance, solution) \
         if verdict.ok else {}
     return Result(
         algorithm=algorithm.name, instance=instance.name,
         fingerprint=instance.fingerprint(), seed=seed,
-        served=len(solution.admitted_ids) if verdict.ok else 0,
+        served=served_count(solution) if verdict.ok else 0,
         total_requests=len(instance.demands),
         runtime_s=round(runtime, 6),
         feasible=verdict.ok,
